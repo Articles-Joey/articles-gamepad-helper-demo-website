@@ -1,0 +1,510 @@
+"use client"
+import { useEffect, useContext, useState, useRef, Suspense } from 'react';
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+import { useLandingNavigation } from '@/hooks/useLandingNavigation';
+
+// import { useSelector, useDispatch } from 'react-redux'
+
+// import ROUTES from 'components/constants/routes'
+
+import ArticlesButton from '@/components/UI/Button';
+// import SingleInput from '@/components/Articles/SingleInput';
+// import { useLocalStorageNew } from '@/hooks/useLocalStorageNew';
+// import IsDev from '@/components/IsDev';
+// import { ChromePicker } from 'react-color';
+// import { useSocketStore } from '@/hooks/useSocketStore';
+import { useSearchParams } from 'next/navigation';
+// import { useGameStore } from '@/hooks/useGameStore';
+
+// import GameScoreboard from 'components/Games/GameScoreboard'
+
+// const Ad = dynamic(() => import('components/Ads/Ad'), {
+//     ssr: false,
+// });
+
+// const PrivateGameModal = dynamic(
+//     () => import('app/(site)/community/games/four-frogs/components/PrivateGameModal'),
+//     { ssr: false }
+// )
+
+const assets_src = 'games/Cannon/'
+
+const game_key = 'catching-game'
+const game_name = 'Catching Game'
+
+// import {
+//     Ad,
+//     GameScoreboard, 
+//     // ReturnToLauncherButton,
+// } from '@articles-media/articles-dev-box';
+
+// import GameScoreboard from '@articles-media/articles-dev-box/GameScoreboard';
+// import Ad from '@articles-media/articles-dev-box/Ad';
+
+// import useUserDetails from '@articles-media/articles-dev-box/useUserDetails';
+// import useUserToken from '@articles-media/articles-dev-box/useUserToken';
+
+import { GamepadKeyboard, PieMenu } from '@articles-media/articles-gamepad-helper';
+
+const ReturnToLauncherButton = dynamic(() =>
+    import('@articles-media/articles-dev-box/ReturnToLauncherButton'),
+    { ssr: false }
+);
+
+import { useStore } from '@/hooks/useStore';
+import dynamic from 'next/dynamic';
+
+export default function LobbyPage() {
+
+    const searchParams = useSearchParams()
+    const searchParamsObject = Object.fromEntries(searchParams.entries())
+    let {
+        controllerMode,
+        launcher_mode,
+    } = searchParamsObject
+
+    launcher_mode = launcher_mode === '1' ? true : false
+
+    // const {
+    //     socket,
+    // } = useSocketStore(state => ({
+    //     socket: state.socket,
+    // }));
+
+    // const userReduxState = useSelector((state) => state.auth.user_details)
+    const userReduxState = false
+
+    const darkMode = useStore((state) => state.darkMode)
+    const toggleDarkMode = useStore((state) => state.toggleDarkMode)
+
+    // const friendsModal = useStore((state) => state.friendsModal)
+    // const setFriendsModal = useStore((state) => state.setFriendsModal)
+
+    const nickname = useStore((state) => state.nickname)
+    const setNickname = useStore((state) => state.setNickname)
+    const nicknameKeyboard = useStore((state) => state.nicknameKeyboard)
+    // const [nickname, setNickname] = useLocalStorageNew("game:nickname", userReduxState.display_name)
+
+    // const [showInfoModal, setShowInfoModal] = useState(false)
+    // const [showSettingsModal, setShowSettingsModal] = useState(false)
+    // const [showPrivateGameModal, setShowPrivateGameModal] = useState(false)
+
+    const setShowInfoModal = useStore((state) => state.setShowInfoModal)
+    const setShowSettingsModal = useStore((state) => state.setShowSettingsModal)
+    const setShowCreditsModal = useStore((state) => state.setShowCreditsModal)
+
+    const [lobbyDetails, setLobbyDetails] = useState({
+        players: [],
+        games: [],
+    })
+
+    const elementsRef = useRef([]);
+    useLandingNavigation(elementsRef);
+
+    useEffect(() => {
+
+    }, [])
+
+    useEffect(() => {
+
+        // console.log(
+        //     helloWorld()
+        // );
+
+    }, [])
+
+    return (
+
+        <div className="landing-page">
+
+            <Suspense>
+                <GamepadKeyboard
+                    disableToggle={true}
+                    active={nicknameKeyboard}
+                    onFinish={(text) => {
+                        console.log("FINISH KEYBOARD", text)
+                        useStore.getState().setNickname(text);
+                        useStore.getState().setNicknameKeyboard(false);
+                    }}
+                    onCancel={(text) => {
+                        console.log("CANCEL KEYBOARD", text)
+                        // useStore.getState().setNickname(text);
+                        useStore.getState().setNicknameKeyboard(false);
+                    }}
+                />
+                <PieMenu
+                    options={[
+                        {
+                            label: 'Settings',
+                            icon: 'fad fa-cog',
+                            callback: () => {
+                                setShowSettingsModal(prev => !prev)
+                            }
+                        },
+                        {
+                            label: 'Go Back',
+                            icon: 'fad fa-arrow-left',
+                            callback: () => {
+                                window.history.back()
+                            }
+                        },
+                        {
+                            label: 'Credits',
+                            icon: 'fad fa-info-circle',
+                            callback: () => {
+                                setShowCreditsModal(true)
+                            }
+                        },
+                        {
+                            label: 'Game Launcher',
+                            icon: 'fad fa-gamepad',
+                            callback: () => {
+                                window.location.href = 'https://games.articles.media';
+                            }
+                        },
+                        {
+                            label: `${darkMode ? "Light" : "Dark"} Mode`,
+                            icon: 'fad fa-palette',
+                            callback: () => {
+                                toggleDarkMode()
+                            }
+                        }
+                    ]}
+                    onFinish={(event) => {
+                        console.log("Event", event)
+                        if (event.callback) {
+                            event.callback()
+                        }
+                    }}
+                />
+            </Suspense>
+
+            {/* {showPrivateGameModal &&
+                <PrivateGameModal
+                    show={showPrivateGameModal}
+                    setShow={setShowPrivateGameModal}
+                />
+            } */}
+
+            <div className='background-wrap'>
+                {/* <Image
+                    src={`${process.env.NEXT_PUBLIC_CDN}games/Catching Game/catching-game-toontown-thumbnail.webp`}
+                    alt=""
+                    fill
+                    style={{ objectFit: 'cover', objectPosition: 'center', filter: 'blur(10px)' }}
+                /> */}
+            </div>
+
+            <div className="container d-flex flex-column-reverse flex-lg-row justify-content-center align-items-center">
+
+                <div
+                    style={{ "width": "20rem" }}
+                >
+
+                    <h1 className='text-center mb-0'>Articles Gamepad Helper Demo</h1>
+
+                    <img
+                        src={`/img/icon.svg`}
+                        alt="Logo"
+                        className=""
+                        height={200}
+                        style={{
+                            objectFit: "contain",
+                            width: "100%"
+                        }}
+                    >
+                    </img>
+
+                    <div
+                        className="card card-articles card-sm mb-4"
+                    >
+
+                        {/* <div style={{ position: 'relative', height: '200px' }}>
+                            <Image
+                                src={Logo}
+                                alt=""
+                                fill
+                                style={{ objectFit: 'cover' }}
+                            />
+                        </div> */}
+
+                        <div className='card-header d-flex align-items-center'>
+
+                            {/* <div className="flex-grow-1">
+
+                                <div className="form-group articles mb-0">
+                                    <label htmlFor="nickname">Nickname</label>
+                                    <input
+                                        ref={el => elementsRef.current[0] = el}
+                                        type="text"
+                                        className="form-control"
+                                        id="nickname"
+                                        value={nickname}
+                                        onChange={(e) => setNickname(e.target.value)}
+                                        placeholder="Enter your nickname"
+                                    />
+                                </div>
+
+                                <div className='mt-1' style={{ fontSize: '0.8rem' }}>Visible to all players</div>
+
+                            </div> */}
+
+                            Exported Component Testing
+
+                        </div>
+
+                        <div className="card-body">
+
+                            <div
+                            //  className='mb-3'
+                            >
+                                <Link href={{
+                                    pathname: `/play`
+                                }}>
+                                    <ArticlesButton
+                                        ref={el => elementsRef.current[1] = el}
+                                        className={`w-100 mb-2`}
+                                        small
+                                    >
+                                        <i className="fas fa-play"></i>
+                                        PieMenu
+                                    </ArticlesButton>
+                                </Link>
+
+                                <Link href={{
+                                    pathname: `/play`
+                                }}>
+                                    <ArticlesButton
+                                        ref={el => elementsRef.current[1] = el}
+                                        className={`w-100 mb-2`}
+                                        small
+                                    >
+                                        <i className="fas fa-play"></i>
+                                        GamepadKeyboard
+                                    </ArticlesButton>
+                                </Link>
+
+                                <Link href={{
+                                    pathname: `/play`
+                                }}>
+                                    <ArticlesButton
+                                        ref={el => elementsRef.current[1] = el}
+                                        className={`w-100 mb-2`}
+                                        small
+                                    >
+                                        <i className="fas fa-play"></i>
+                                        GamepadPreview
+                                    </ArticlesButton>
+                                </Link>
+                            </div>
+
+                            {/* <div className="fw-bold mb-1 small text-center">
+                                {lobbyDetails.players.length || 0} player{lobbyDetails.players.length > 1 && 's'} in the lobby.
+                            </div> */}
+
+                            {/* <div className="servers">
+    
+                                {[1, 2, 3, 4].map(id => {
+    
+                                    let lobbyLookup = lobbyDetails?.fourFrogsGlobalState?.games?.find(lobby =>
+                                        parseInt(lobby.server_id) == id
+                                    )
+    
+                                    return (
+                                        <div key={id} className="server">
+    
+                                            <div className='d-flex justify-content-between align-items-center w-100 mb-2'>
+                                                <div className="mb-0" style={{ fontSize: '0.9rem' }}><b>Server {id}</b></div>
+                                                <div className='mb-0'>{lobbyLookup?.players?.length || 0}/4</div>
+                                            </div>
+    
+                                            <div className='d-flex justify-content-around w-100 mb-1'>
+                                                {[1, 2, 3, 4].map(player_count => {
+    
+                                                    let playerLookup = false
+    
+                                                    if (lobbyLookup?.players?.length >= player_count) playerLookup = true
+    
+                                                    return (
+                                                        <div key={player_count} className="icon" style={{
+                                                            width: '20px',
+                                                            height: '20px',
+                                                            ...(playerLookup ? {
+                                                                backgroundColor: 'black',
+                                                            } : {
+                                                                backgroundColor: 'gray',
+                                                            }),
+                                                            border: '1px solid black'
+                                                        }}>
+    
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+    
+                                            <Link
+                                                className={``}
+                                                href={{
+                                                    pathname: `/play`,
+                                                    query: {
+                                                        server: id
+                                                    }
+                                                }}
+                                            >
+                                                <ArticlesButton
+                                                    className="px-5"
+                                                    small
+                                                >
+                                                    Join
+                                                </ArticlesButton>
+                                            </Link>
+    
+                                        </div>
+                                    )
+                                })}
+    
+                            </div> */}
+
+                        </div>
+
+                        <div className="card-footer d-flex flex-wrap justify-content-center">
+
+                            <div className='w-50 d-flex'>
+                                <ArticlesButton
+                                    ref={el => elementsRef.current[2] = el}
+                                    className={`w-100`}
+                                    small
+                                    onClick={() => {
+                                        setShowSettingsModal(true)
+                                    }}
+                                >
+                                    <i className="fad fa-cog"></i>
+                                    Settings
+                                </ArticlesButton>
+                                <ArticlesButton
+                                    // ref={el => elementsRef.current[2] = el}
+                                    className={``}
+                                    small
+                                    onClick={() => {
+                                        toggleDarkMode()
+                                    }}
+                                >
+                                    {darkMode ? <i className="fad fa-sun"></i> : <i className="fad fa-moon"></i>}
+                                </ArticlesButton>
+                            </div>
+
+                            <ArticlesButton
+                                ref={el => elementsRef.current[3] = el}
+                                className={`w-50`}
+                                small
+                                onClick={() => {
+                                    setShowInfoModal(true)
+                                }}
+                            >
+                                <i className="fab fa-npm"></i>
+                                NPM
+                            </ArticlesButton>
+
+                            <Link href={'https://github.com/Articles-Joey/articles-gamepad-helper'} target='_blank' rel='noopener noreferrer' className='w-50'>
+                                <ArticlesButton
+                                    ref={el => elementsRef.current[4] = el}
+                                    className={`w-100`}
+                                    small
+                                    onClick={() => {
+
+                                    }}
+                                >
+                                    <i className="fab fa-github"></i>
+                                    Github
+                                </ArticlesButton>
+                            </Link>
+
+                            <ArticlesButton
+                                ref={el => elementsRef.current[5] = el}
+                                className={`w-50`}
+                                small
+                                onClick={() => {
+                                    setShowCreditsModal(true)
+                                }}
+                            >
+                                <i className="fad fa-users"></i>
+                                Credits
+                            </ArticlesButton>
+
+                            {/* {userDetails &&
+                                <ArticlesButton
+                                    // ref={el => elementsRef.current[5] = el}
+                                    className={`w-50`}
+                                    active={
+                                        friendsModal
+                                    }
+                                    small
+                                    onClick={() => {
+                                        // setShowCreditsModal(true)
+                                        setFriendsModal(true);
+                                    }}
+                                >
+                                    <i className="fad fa-users"></i>
+                                    Friends
+                                </ArticlesButton>
+                            } */}
+
+                        </div>
+
+                    </div>
+
+                    <ReturnToLauncherButton />
+
+                    <div className="small text-center mt-3">
+                        <a
+                            href="https://github.com/Articles-Joey/articles-gamepad-helper-demo-website"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            This demos source code
+                        </a>
+                    </div>
+
+                    {/* {launcher_mode &&
+                        <ArticlesButton
+                            ref={el => elementsRef.current[6] = el}
+                            className={`w-100`}
+                            small
+                            style={{
+                                zIndex: 10,
+                                position: "relative",
+                            }}
+                            onClick={() => {
+                                window.history.back()
+                            }}
+                        >
+                            <i className="fad fa-gamepad"></i>
+                            Return to Games
+                        </ArticlesButton>
+                    } */}
+
+                </div>
+
+                {/* <GameScoreboard
+                    game={game_name}
+                    style="Default"
+                    darkMode={darkMode ? true : false}
+                />
+
+                <Ad
+                    style="Default"
+                    section={"Games"}
+                    section_id={game_name}
+                    darkMode={darkMode ? true : false}
+                    user_ad_token={userToken}
+                    userDetails={userDetails}
+                    userDetailsLoading={userDetailsLoading}
+                /> */}
+
+            </div>
+        </div>
+    );
+}

@@ -56,6 +56,7 @@ const ReturnToLauncherButton = dynamic(() =>
 
 import { useStore } from '@/hooks/useStore';
 import dynamic from 'next/dynamic';
+import topLevelComponents from '@/components/constants/topLevelComponents';
 
 export default function LobbyPage() {
 
@@ -261,7 +262,22 @@ export default function LobbyPage() {
                             <div
                             //  className='mb-3'
                             >
-                                <Link href={{
+
+                                {topLevelComponents.map((link, index) => (
+                                    <Link key={index} href={link.link} prefetch={false}>
+                                        <ArticlesButton
+                                            ref={el => elementsRef.current[index] = el}
+
+                                            className={`w-100 mb-2`}
+                                            small
+                                        >
+                                            <i className="fas fa-play me-2"></i>
+                                            {link.name}
+                                        </ArticlesButton>
+                                    </Link>
+                                ))}
+
+                                {/* <Link href={{
                                     pathname: `/play`
                                 }}>
                                     <ArticlesButton
@@ -298,7 +314,7 @@ export default function LobbyPage() {
                                         <i className="fas fa-play"></i>
                                         GamepadPreview
                                     </ArticlesButton>
-                                </Link>
+                                </Link> */}
                             </div>
 
                             {/* <div className="fw-bold mb-1 small text-center">
@@ -396,19 +412,21 @@ export default function LobbyPage() {
                                 </ArticlesButton>
                             </div>
 
-                            <ArticlesButton
-                                ref={el => elementsRef.current[3] = el}
-                                className={`w-50`}
-                                small
-                                onClick={() => {
-                                    setShowInfoModal(true)
-                                }}
-                            >
-                                <i className="fab fa-npm"></i>
-                                NPM
-                            </ArticlesButton>
+                            <a href="https://www.npmjs.com/package/@articles-media/articles-gamepad-helper" target="_blank" rel="noopener noreferrer" className="w-50">
+                                <ArticlesButton
+                                    ref={el => elementsRef.current[3] = el}
+                                    className={`w-100`}
+                                    small
+                                    onClick={() => {
+                                        setShowInfoModal(true)
+                                    }}
+                                >
+                                    <i className="fab fa-npm"></i>
+                                    NPM
+                                </ArticlesButton>
+                            </a>
 
-                            <Link href={'https://github.com/Articles-Joey/articles-gamepad-helper'} target='_blank' rel='noopener noreferrer' className='w-50'>
+                            <a href="https://github.com/Articles-Joey/articles-gamepad-helper" target="_blank" rel="noopener noreferrer" className="w-50">
                                 <ArticlesButton
                                     ref={el => elementsRef.current[4] = el}
                                     className={`w-100`}
@@ -420,7 +438,7 @@ export default function LobbyPage() {
                                     <i className="fab fa-github"></i>
                                     Github
                                 </ArticlesButton>
-                            </Link>
+                            </a>
 
                             <ArticlesButton
                                 ref={el => elementsRef.current[5] = el}

@@ -7,6 +7,12 @@
     align-items: center;
     min-height: calc(100vh - 100px);
 
+    h1 {
+        font-size: 1.5rem;
+        transform: scale(1.5);
+        // margin-bottom: 1rem;
+    }
+
     .card {
         // --bs-card-bg: rgb(149, 93, 57) !important;
     }

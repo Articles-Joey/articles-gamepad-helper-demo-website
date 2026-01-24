@@ -30,10 +30,10 @@ import { useSearchParams } from 'next/navigation';
 //     { ssr: false }
 // )
 
-const assets_src = 'games/Cannon/'
+// const assets_src = 'games/Cannon/'
 
-const game_key = 'catching-game'
-const game_name = 'Catching Game'
+// const game_key = 'catching-game'
+// const game_name = 'Catching Game'
 
 // import {
 //     Ad,
@@ -205,19 +205,19 @@ export default function LobbyPage() {
                     style={{ "width": "20rem" }}
                 >
 
-                    <h1 className='text-center mb-0'>Articles Gamepad Helper Demo</h1>
-
                     <img
                         src={`/img/icon.svg`}
                         alt="Logo"
                         className=""
-                        height={200}
+                        height={100}
                         style={{
                             objectFit: "contain",
                             width: "100%"
                         }}
                     >
                     </img>
+
+                    <h1 className='text-center tiny5-regular mb-3'>Articles Gamepad Helper Demo</h1>
 
                     <div
                         className="card card-articles card-sm mb-4"
@@ -412,17 +412,38 @@ export default function LobbyPage() {
                                 </ArticlesButton>
                             </div>
 
-                            <a href="https://www.npmjs.com/package/@articles-media/articles-gamepad-helper" target="_blank" rel="noopener noreferrer" className="w-50">
+                            <a
+                                href="https://www.npmjs.com/package/@articles-media/articles-gamepad-helper" target="_blank" rel="noopener noreferrer"
+                                className="w-50"
+                                style={{
+                                    textDecoration: 'none',
+                                }}
+                            >
                                 <ArticlesButton
                                     ref={el => elementsRef.current[3] = el}
-                                    className={`w-100`}
+                                    className={`w-100 d-flex justify-content-center align-items-center`}
                                     small
                                     onClick={() => {
                                         setShowInfoModal(true)
                                     }}
                                 >
-                                    <i className="fab fa-npm"></i>
-                                    NPM
+                                    {/* <i
+                                        className="fab fa-npm me-1"
+                                        style={{
+                                            color: 'red'
+                                        }}
+                                    ></i> */}
+                                    <Image
+                                        src={"img/npm-square-red.svg"}
+                                        alt="NPM"
+                                        width={16}
+                                        height={16}
+                                        className='me-2'
+                                        style={{
+                                            transform: "scale(1.5)"
+                                        }}
+                                    ></Image>
+                                    <div>NPM</div>
                                 </ArticlesButton>
                             </a>
 

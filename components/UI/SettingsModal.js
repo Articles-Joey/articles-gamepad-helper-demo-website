@@ -6,6 +6,8 @@ import ArticlesButton from "@/components/UI/Button";
 import { useModalNavigation } from "@/hooks/useModalNavigation";
 import { useStore } from "@/hooks/useStore";
 
+import B from '@articles-media/articles-gamepad-helper/dist/img/Xbox UI/B.svg';
+
 export default function SettingsModal({
     show,
     setShow,
@@ -69,9 +71,9 @@ export default function SettingsModal({
                     <div className='p-2'>
                         {[
                             'Graphics',
-                            'Controls',
-                            'Audio',
-                            'Chat'
+                            // 'Controls',
+                            // 'Audio',
+                            // 'Chat'
                         ].map((item, i) =>
                             <ArticlesButton
                                 ref={el => elementsRef.current[i] = el}
@@ -110,7 +112,7 @@ export default function SettingsModal({
 
                                 <hr />
 
-                                <div>
+                                {/* <div>
                                     <div className="mb-2">Quality</div>
                                     {[
                                         'Low',
@@ -130,7 +132,7 @@ export default function SettingsModal({
                                         </ArticlesButton>
                                     )
                                     }
-                                </div>
+                                </div> */}
 
                             </>
                         }
@@ -229,7 +231,7 @@ export default function SettingsModal({
                             }}
                             className="d-flex align-items-center"
                         >
-                            <img src="/img/Xbox UI/B.svg" className="me-1" alt="Close" />
+                            <img src={B.src} className="me-1" alt="Close" />
                             Close
                         </ArticlesButton>
 

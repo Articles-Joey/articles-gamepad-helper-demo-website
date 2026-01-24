@@ -63,7 +63,7 @@ export default function CreditsModal({
                         Developer: Articles Joey
                     </h6>
 
-                    <Link href="https://github.com/articles-joey/catching-game" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://github.com/articles-joey/articles-gamepad-helper" target="_blank" rel="noopener noreferrer">
                         <ArticlesButton
                             ref={el => elementsRef.current[0] = el}
                             size=""
@@ -93,7 +93,7 @@ export default function CreditsModal({
                         Attributions
                     </h6>
 
-                    <Link href="https://github.com/Articles-Joey/catching-game/blob/main/README.md#attributions" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://github.com/Articles-Joey/articles-gamepad-helper/blob/main/README.md#attributions" target="_blank" rel="noopener noreferrer">
                         <ArticlesButton
                             ref={el => elementsRef.current[2] = el}
                             size=""

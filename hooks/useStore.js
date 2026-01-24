@@ -26,7 +26,7 @@ export const useStore = create()(
                 }))
             },
 
-            darkMode: false,
+            darkMode: null,
             toggleDarkMode: () => {
                 set((prev) => ({
                     darkMode: !prev.darkMode
@@ -70,9 +70,31 @@ export const useStore = create()(
                 }))
             },
 
+            showInfoModal: false,
+            setShowInfoModal: (newValue) => {
+                set((prev) => ({
+                    showInfoModal: newValue
+                }))
+            },
+
+            showSettingsModal: false,
+            setShowSettingsModal: (newValue) => {
+                set((prev) => ({
+                    showSettingsModal: newValue
+                }))
+            },
+
+            showCreditsModal: false,
+            setShowCreditsModal: (newValue) => {
+                set((prev) => ({
+                    showCreditsModal: newValue
+                }))
+            },
+
         }),
         {
-            name: 'catching-game-store', // name of the item in the storage (must be unique)
+            name: 'gamepad-helper-demo-store', // name of the item in the storage (must be unique)
+            version: 2,
             onRehydrateStorage: (state) => {
                 return () => state.setHasHydrated(true)
             },
